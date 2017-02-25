@@ -10,11 +10,6 @@ class Game
         $this->board = $board;
     }
 
-    public function getBoard(): array
-    {
-        return $this->board->toArray();
-    }
-
     public function click(int $x, int $y): void
     {
         $this->clickPoint(new Point($x, $y));

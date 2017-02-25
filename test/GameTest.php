@@ -5,112 +5,115 @@ use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
 {
-    public function testCanCreateGame()
+    public function testCanCreateBoard()
     {
-        $game = $this->createGame([
+        $board = $this->createBoard([
             '  ',
             ' x',
             ' x',
         ]);
-        $this->assertView(
+        $this->assertBoard(
             [
                 '  ',
                 '  ',
                 '  ',
             ],
-            $game
+            $board
         );
     }
 
     public function testClickNextToBombShowsNumber()
     {
-        $game = $this->createGame([
+        $board = $this->createBoard([
             '  ',
             ' x',
             ' x',
         ]);
-        $game->click(1, 0);
-        $this->assertView(
+        $this->click($board, 1, 0);
+        $this->assertBoard(
             [
                 ' 1',
                 '  ',
                 '  ',
             ],
-            $game
+            $board
         );
     }
 
     public function testClickOnEmptyCellOpensAdjacentEmptyCells()
     {
-        $game = $this->createGame([
+        $board = $this->createBoard([
             '   ',
             '   ',
             '  x',
             '  x',
         ]);
-        $game->click(0, 0);
-        $this->assertView(
+        $this->click($board, 0, 0);
+        $this->assertBoard(
             [
                 '000',
                 '011',
                 '02 ',
                 '02 ',
             ],
-            $game
+            $board
         );
     }
 
     public function testMaxNumberOfBombs()
     {
-        $game = $this->createGame([
+        $board = $this->createBoard([
             'xxx',
             'x x',
             'xxx',
         ]);
-        $game->click(1, 1);
-        $this->assertView(
+        $this->click($board, 1, 1);
+        $this->assertBoard(
             [
                 '   ',
                 ' 8 ',
                 '   ',
             ],
-            $game
+            $board
         );
     }
 
     public function testClickOnBombShowsAllBombs()
     {
-        $game = $this->createGame([
+        $board = $this->createBoard([
             'x  ',
             'x x',
             ' xx',
         ]);
-        $game->click(1, 2);
-        $this->assertView(
+        $this->click($board, 1, 2);
+        $this->assertBoard(
             [
                 'x  ',
                 'x x',
                 ' xx',
             ],
-            $game
+            $board
         );
     }
 
-    private function assertView(array $view, Game $game)
+    private function click(Board $board, int $x, int $y)
+    {
+        (new Game($board))->click($x, $y);
+    }
+
+    private function assertBoard(array $view, Board $board)
     {
         $this->assertEquals(
             array_map('str_split', $view),
-            $game->getBoard()
+            $board->toArray()
         );
     }
 
-    private function createGame(array $bomb_map): Game
+    private function createBoard(array $bomb_map): Board
     {
-        return new Game(
-            new Board(
-                new BombMap(
-                    array_map('str_split', $bomb_map)
-                )
+        return new Board(
+            new BombMap(
+                array_map('str_split', $bomb_map)
             )
         );
     }

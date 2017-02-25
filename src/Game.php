@@ -36,7 +36,7 @@ class Game
             return;
         }
         foreach ($this->getNeighboursOf($point) as $n) {
-            if ($this->board->isOpen($n)) {
+            if ($this->board->isUnopened($n)) {
                 $this->clickPoint($n);
             }
         }

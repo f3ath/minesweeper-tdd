@@ -8,14 +8,21 @@ class GameTest extends TestCase
     public function testCanCreateGame()
     {
         $game = new Game(2, 3);
-        $this->assertEquals(
+        $this->assertView(
             [
-                [' ', ' '],
-                [' ', ' '],
-                [' ', ' '],
+                '  ',
+                '  ',
+                '  ',
             ],
-            $game->getView()
+            $game
         );
     }
 
+    private function assertView(array $view, Game $game)
+    {
+        $this->assertEquals(
+            array_map('str_split', $view),
+            $game->getView()
+        );
+    }
 }

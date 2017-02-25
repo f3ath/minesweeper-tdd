@@ -98,7 +98,7 @@ class GameTest extends TestCase
 
     private function click(Board $board, int $x, int $y)
     {
-        (new Game($board))->click($x, $y);
+        (new Game($board))->click(new Point($x, $y));
     }
 
     private function assertBoard(array $view, Board $board)

@@ -10,12 +10,7 @@ class Game
         $this->board = $board;
     }
 
-    public function click(int $x, int $y): void
-    {
-        $this->clickPoint(new Point($x, $y));
-    }
-
-    private function clickPoint(Point $point): void
+    public function click(Point $point): void
     {
         if ($this->board->hasBomb($point)) {
             $this->board->drawAllBombs();
@@ -28,7 +23,7 @@ class Game
         }
         foreach ($this->board->getNeighboursOf($point) as $n) {
             if ($this->board->isUnopened($n)) {
-                $this->clickPoint($n);
+                $this->click($n);
             }
         }
     }

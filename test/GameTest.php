@@ -106,7 +106,12 @@ class GameTest extends TestCase
 
     private function createGame(array $bomb_map): Game
     {
-        $game = new Game(new BombMap(array_map('str_split', $bomb_map)));
-        return $game;
+        return new Game(
+            new Board(
+                new BombMap(
+                    array_map('str_split', $bomb_map)
+                )
+            )
+        );
     }
 }

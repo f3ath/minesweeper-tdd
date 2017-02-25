@@ -17,6 +17,11 @@ class Point
         return $a[$this->y][$this->x];
     }
 
+    public function setInArray(array &$a, $value)
+    {
+        $a[$this->y][$this->x] = $value;
+    }
+
     public function getNeighbours(int $width, int $height)
     {
         foreach ($this->getAdjacentCoordinates($this->x, $width) as $x) {

@@ -19,7 +19,8 @@ class Game
 
     public function click(int $x, int $y): void
     {
-        $this->view[$y][$x] = (string) $this->getBombsCountAround(new Point($x, $y));
+        $p = new Point($x, $y);
+        $p->setInArray($this->view, (string) $this->getBombsCountAround($p));
     }
 
     private function getBombsCountAround(Point $point): int

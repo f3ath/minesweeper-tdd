@@ -78,17 +78,35 @@ class GameTest extends TestCase
         );
     }
 
+    public function testClickOnBombShowsAllBombs()
+    {
+        $game = $this->createGame([
+            'x  ',
+            'x x',
+            ' xx',
+        ]);
+        $game->click(1, 2);
+        $this->assertView(
+            [
+                'x  ',
+                'x x',
+                ' xx',
+            ],
+            $game
+        );
+    }
+
     private function assertView(array $view, Game $game)
     {
         $this->assertEquals(
             array_map('str_split', $view),
-            $game->getView()
+            $game->getBoard()
         );
     }
 
     private function createGame(array $bomb_map): Game
     {
-        $game = new Game(array_map('str_split', $bomb_map));
+        $game = new Game(new BombMap(array_map('str_split', $bomb_map)));
         return $game;
     }
 }

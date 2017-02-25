@@ -3,18 +3,18 @@ namespace F3\Minesweeper;
 
 class Game
 {
-    private $view;
+    private $board;
     private $bomb_map;
 
-    public function __construct(array $bomb_map)
+    public function __construct(BombMap $bomb_map)
     {
-        $this->bomb_map = new BombMap($bomb_map);
-        $this->view = array_fill(0, $this->bomb_map->getHeight(), array_fill(0, $this->bomb_map->getWidth(), ' '));
+        $this->bomb_map = $bomb_map;
+        $this->board = new Board($bomb_map);
     }
 
-    public function getView(): array
+    public function getBoard(): array
     {
-        return $this->view;
+        return $this->board->toArray();
     }
 
     public function click(int $x, int $y): void
@@ -24,13 +24,19 @@ class Game
 
     private function clickPoint(Point $point): void
     {
+        if ($this->bomb_map->isBomb($point)) {
+            foreach ($this->bomb_map->getAllBombPoints() as $bomb_point) {
+                $this->board->drawBomb($bomb_point);
+            }
+            return;
+        }
         $bombs = $this->getBombsCountAround($point);
-        $point->setInArray($this->view, (string) $bombs);
+        $this->board->drawNumber($point, $bombs);
         if ($bombs > 0) {
             return;
         }
         foreach ($this->getNeighboursOf($point) as $n) {
-            if ($n->inArray($this->view) == ' ') {
+            if ($this->board->isOpen($n)) {
                 $this->clickPoint($n);
             }
         }

@@ -1,7 +1,7 @@
 <?php
 namespace F3\Minesweeper;
 
-class BombMap
+class BombMap implements Rectangle
 {
     private $map;
 
@@ -13,6 +13,15 @@ class BombMap
     public function isBomb(Point $point): bool
     {
         return $point->inArray($this->map) === 'x';
+    }
+
+    public function getAllBombPoints()
+    {
+        foreach (Point::iterateRectangle($this) as $point) {
+            if ($this->isBomb($point)) {
+                yield $point;
+            }
+        }
     }
 
     public function getHeight(): int

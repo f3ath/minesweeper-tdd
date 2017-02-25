@@ -12,6 +12,15 @@ class Point
         $this->y = $y;
     }
 
+    public static function iterateRectangle(Rectangle $rect)
+    {
+        foreach (range(0, $rect->getWidth() - 1) as $x) {
+            foreach (range(0, $rect->getHeight() - 1) as $y) {
+                yield new Point($x, $y);
+            }
+        }
+    }
+
     public function inArray(array $a)
     {
         return $a[$this->y][$this->x];
@@ -31,11 +40,6 @@ class Point
                 }
             }
         }
-    }
-
-    public function __toString()
-    {
-        return "($this->x, $this->y)";
     }
 
     private function getAdjacentCoordinates(int $n, int $size): array

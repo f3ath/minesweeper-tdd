@@ -31,10 +31,10 @@ class Point
         $a[$this->y][$this->x] = $value;
     }
 
-    public function getNeighbours(int $width, int $height)
+    public function getNeighbours(Rectangle $rect)
     {
-        foreach ($this->getAdjacentCoordinates($this->x, $width) as $x) {
-            foreach ($this->getAdjacentCoordinates($this->y, $height) as $y) {
+        foreach ($this->getAdjacentCoordinates($this->x, $rect->getWidth()) as $x) {
+            foreach ($this->getAdjacentCoordinates($this->y, $rect->getHeight()) as $y) {
                 if ([$x, $y] != [$this->x, $this->y]) {
                     yield new Point($x, $y);
                 }

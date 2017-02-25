@@ -55,7 +55,7 @@ class Board
 
     public function getNeighboursOf(Point $point): \Generator
     {
-        return $point->getNeighbours($this->bomb_map->getWidth(), $this->bomb_map->getHeight());
+        return $point->getNeighbours($this->bomb_map);
     }
 
     private function drawBomb(Point $point): void

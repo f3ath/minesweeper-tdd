@@ -10,8 +10,18 @@ class BombMap
         $this->map = $map;
     }
 
-    public function isBomb($p): bool
+    public function isBomb(Point $point): bool
     {
-        return $this->map[$p[1]][$p[0]] == 'x';
+        return $point->inArray($this->map) === 'x';
+    }
+
+    public function getHeight(): int
+    {
+        return count($this->map);
+    }
+
+    public function getWidth(): int
+    {
+        return count($this->map[0]);
     }
 }

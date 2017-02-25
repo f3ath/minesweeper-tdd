@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
 {
-    public function _testCanCreateGame()
+    public function testCanCreateGame()
     {
         $game = $this->createGame([
             '  ',

@@ -45,8 +45,8 @@ class Board
     public function getBombsCountAround(Point $point): int
     {
         $count = 0;
-        foreach ($this->getNeighbours($point) as $p) {
-            if ($this->map->hasBomb($p)) {
+        foreach ($this->getNeighbours($point) as $neighbour) {
+            if ($this->map->hasBomb($neighbour)) {
                 $count++;
             }
         }

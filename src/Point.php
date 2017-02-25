@@ -33,6 +33,11 @@ class Point
         }
     }
 
+    public function __toString()
+    {
+        return "($this->x, $this->y)";
+    }
+
     private function getAdjacentCoordinates(int $n, int $size): array
     {
         return range(max(0, $n - 1), min($n + 1, $size - 1));

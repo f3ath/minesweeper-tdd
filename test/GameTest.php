@@ -40,6 +40,44 @@ class GameTest extends TestCase
         );
     }
 
+    public function testClickOnEmptyCellOpensAdjacentEmptyCells()
+    {
+        $game = $this->createGame([
+            '   ',
+            '   ',
+            '  x',
+            '  x',
+        ]);
+        $game->click(0, 0);
+        $this->assertView(
+            [
+                '000',
+                '011',
+                '02 ',
+                '02 ',
+            ],
+            $game
+        );
+    }
+
+    public function testMaxNumberOfBombs()
+    {
+        $game = $this->createGame([
+            'xxx',
+            'x x',
+            'xxx',
+        ]);
+        $game->click(1, 1);
+        $this->assertView(
+            [
+                '   ',
+                ' 8 ',
+                '   ',
+            ],
+            $game
+        );
+    }
+
     private function assertView(array $view, Game $game)
     {
         $this->assertEquals(

@@ -12,7 +12,7 @@ class BombMap implements Rectangle
         $this->map = $map;
     }
 
-    public function isBomb(Point $point): bool
+    public function hasBomb(Point $point): bool
     {
         return $point->inArray($this->map) === self::BOMB;
     }
@@ -20,7 +20,7 @@ class BombMap implements Rectangle
     public function getAllBombPoints()
     {
         foreach (Point::iterateRectangle($this) as $point) {
-            if ($this->isBomb($point)) {
+            if ($this->hasBomb($point)) {
                 yield $point;
             }
         }

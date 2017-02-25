@@ -7,12 +7,12 @@ class Board
     private const BOMB = 'x';
 
     private $board;
-    private $bomb_map;
+    private $map;
 
-    public function __construct(BombMap $bomb_map)
+    public function __construct(BombMap $map)
     {
-        $this->bomb_map = $bomb_map;
-        $this->board = array_fill(0, $bomb_map->getHeight(), array_fill(0, $bomb_map->getWidth(), self::UNOPENED));
+        $this->map = $map;
+        $this->board = array_fill(0, $map->getHeight(), array_fill(0, $map->getWidth(), self::UNOPENED));
     }
 
     public function toArray(): array
@@ -32,30 +32,30 @@ class Board
 
     public function hasBomb(Point $point): bool
     {
-        return $this->bomb_map->isBomb($point);
+        return $this->map->hasBomb($point);
     }
 
     public function drawAllBombs()
     {
-        foreach ($this->bomb_map->getAllBombPoints() as $bomb_point) {
-            $this->drawBomb($bomb_point);
+        foreach ($this->map->getAllBombPoints() as $point) {
+            $this->drawBomb($point);
         }
     }
 
     public function getBombsCountAround(Point $point): int
     {
         $count = 0;
-        foreach ($this->getNeighboursOf($point) as $p) {
-            if ($this->bomb_map->isBomb($p)) {
+        foreach ($this->getNeighbours($point) as $p) {
+            if ($this->map->hasBomb($p)) {
                 $count++;
             }
         }
         return $count;
     }
 
-    public function getNeighboursOf(Point $point): \Generator
+    public function getNeighbours(Point $point): \Generator
     {
-        return $point->getNeighbours($this->bomb_map);
+        return $point->getNeighbours($this->map);
     }
 
     private function drawBomb(Point $point): void

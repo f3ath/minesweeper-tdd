@@ -18,12 +18,16 @@ class Game
         }
         $bombs = $this->board->getBombsCountAround($point);
         $this->board->drawNumber($point, $bombs);
-        if ($bombs > 0) {
-            return;
+        if ($bombs == 0) {
+            $this->propagateClicks($point);
         }
-        foreach ($this->board->getNeighboursOf($point) as $n) {
-            if ($this->board->isUnopened($n)) {
-                $this->click($n);
+    }
+
+    private function propagateClicks(Point $point): void
+    {
+        foreach ($this->board->getNeighbours($point) as $neighbour) {
+            if ($this->board->isUnopened($neighbour)) {
+                $this->click($neighbour);
             }
         }
     }

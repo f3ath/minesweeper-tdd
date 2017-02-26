@@ -2,7 +2,8 @@
   "name": "f3ath/minesweeper",
   "description": "TDD Kata: Minesweeper game",
   "require-dev": {
-    "phpunit/phpunit": "^6.0"
+    "phpunit/phpunit": "^6.0",
+    "squizlabs/php_codesniffer": "^2.8"
   },
   "license": "MIT",
   "authors": [
